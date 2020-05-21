@@ -1,0 +1,30 @@
+# https://taskfile.dev
+
+version: '2'
+
+vars:
+  GREETING: Reference repo for managing mutli repo constallations
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+      - task -l # show-task: true
+    silent: true
+
+  repos:show:
+    desc: _
+    cmds:
+      - echo "- https://github.com/gzvulon/python-fire.git"
+    silent: true
+
+  bundles:show:
+    desc: _
+    cmds:
+      - |
+        echo "
+        libs_python:
+          $(task repos:show)
+        "
+    silent: true
+
