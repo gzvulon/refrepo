@@ -12,13 +12,19 @@ tasks:
       - task -l # show-task: true
     silent: true
 
-  repos:show:
+  sys:which:
+    desc: _
+    cmds:
+      - echo $(pwd)
+      - echo $(realpath Taskfile.yml)
+
+  repos:list:
     desc: _
     cmds:
       - echo "- https://github.com/gzvulon/python-fire.git"
     silent: true
 
-  bundles:show:
+  bundles:list:
     desc: _
     cmds:
       - |
@@ -27,4 +33,13 @@ tasks:
           $(task repos:show)
         "
     silent: true
+
+  bundles:pull:
+    desc: _
+    vars:
+      target: libs_python
+    cmds:
+      - echo "using bundle {{.target}}"
+      - mkdir ../{{.target}}
+      - git -C ../{{.target}} clone https://github.com/gzvulon/python-fire.git
 
