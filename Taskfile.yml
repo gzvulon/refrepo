@@ -4,28 +4,38 @@ version: '2'
 
 vars:
   GREETING: Reference repo for managing mutli repo constallations
+  TWDIR:
+    sh: dirname $(realpath Taskfile.yml)
+    #echo "$(dirname $(which realpath && realpath Taskfile.yml || readlink -f Taskfile.yml))"
+
+_user_:
+  def_props: &r_def_props
+    desc: _
+    dir: "{{.TWDIR}}"
 
 tasks:
   default:
+    <<: *r_def_props
     cmds:
       - echo "{{.GREETING}}"
       - task -l # show-task: true
     silent: true
 
   sys:which:
-    desc: _
+    <<: *r_def_props
     cmds:
+      - echo "{{.TWDIR}}"
       - echo $(pwd)
       - echo $(realpath Taskfile.yml)
 
   repos:list:
-    desc: _
+    <<: *r_def_props
     cmds:
       - echo "- https://github.com/gzvulon/python-fire.git"
     silent: true
 
   bundles:list:
-    desc: _
+    <<: *r_def_props
     cmds:
       - |
         echo "
@@ -35,7 +45,7 @@ tasks:
     silent: true
 
   bundles:pull:
-    desc: _
+    <<: *r_def_props
     vars:
       target: libs_python
     cmds:
